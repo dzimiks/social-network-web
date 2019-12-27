@@ -12,7 +12,7 @@
 					<div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<button id="button-addon2" type="submit" class="btn btn-link text-warning">
+								<button id="button-search" type="submit" class="btn btn-link text-warning">
 									<i class="fa fa-search"></i>
 								</button>
 							</div>
@@ -20,7 +20,7 @@
 									v-model="search"
 									type="text"
 									placeholder="Search..."
-									aria-describedby="button-addon2"
+									aria-describedby="button-search"
 									class="form-control border-0 bg-light">
 						</div>
 					</div>
@@ -66,8 +66,12 @@
 		computed: {
 			filteredUsers() {
 				return this.data.filter(user => {
-					return user.firstName.toLowerCase().includes(this.search.toLowerCase())
-				})
+					if (this.search) {
+						return Array.from(user.friends).includes(parseInt(this.search));
+					}
+
+					return this;
+				});
 			}
 		}
 	}
@@ -78,16 +82,7 @@
 		box-shadow: none;
 	}
 
-	.form-control-underlined {
-		border-width: 0;
-		border-bottom-width: 1px;
-		border-radius: 0;
-		padding-left: 0;
-	}
-
 	.form-control::placeholder {
-		font-size: 0.95rem;
 		color: #aaa;
-		font-style: italic;
 	}
 </style>
